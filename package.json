@@ -18,14 +18,14 @@
   },
   "homepage": "https://github.com/conduitxyz/conduit-docs#readme",
   "dependencies": {
-    "next": "^13.0.6",
-    "nextra": "2.0.1",
-    "nextra-theme-docs": "2.0.1",
+    "next": "^13.5.4",
+    "nextra": "2.13.2",
+    "nextra-theme-docs": "2.13.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/node": "18.11.10",
-    "typescript": "^4.9.3"
+    "@types/node": "20.8.6",
+    "typescript": "^5.2.2"
   }
 }
