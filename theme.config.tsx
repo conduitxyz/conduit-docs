@@ -54,9 +54,6 @@ const config: DocsThemeConfig = {
       />
     </svg>
   ),
-  chat: {
-    link: "https://discord.gg/X5Yn3NzVRh",
-  },
   useNextSeoProps() {
     return {
       titleTemplate: "%s – Conduit",
