@@ -1,15 +1,28 @@
 {
-  "index": "Introduction",
-  "another": "Another Page",
-  "advanced": "Advanced (A Folder)",
-  "about": {
-    "title": "About",
-    "type": "page"
-  },
-  "contact": {
-    "title": "Contact ↗",
-    "type": "page",
-    "href": "https://twitter.com/shuding_",
-    "newWindow": true
+  "index": "Documentation",
+  "getting-started": "Getting Started",
+  "guides": "Guides",
+  "resources": "Resources",
+  "company": {
+    "title": "Company",
+    "type": "menu",
+    "items": {
+      "about": {
+        "title": "About",
+        "href": "https://conduit.xyz/about"
+      },
+      "blog": {
+        "title": "Blog",
+        "href": "https://conduit.xyz/blog"
+      },
+      "careers": {
+        "title": "Careers",
+        "href": "https://jobs.ashbyhq.com/Conduit"
+      },
+      "discord-support": {
+        "title": "Discord Support",
+        "href": "https://discord.com/invite/7nJMfT3UAa"
+      }
+    }
   }
 }

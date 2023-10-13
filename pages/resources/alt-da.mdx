@@ -1,0 +1,19 @@
+# Alternative Data Availability
+
+> How do alternative data availability layers like Celestia and EigenLayer fit into the rollup-centric roadmap?
+
+### How we think about alt DA layers at Conduit and the advice we give our customers
+
+First, the promise of cheaper data availability is attractive, as 99% of the cost of a rollup transaction today is in posting data to Ethereum. Making this over 100x cheaper would drastically reduce transaction costs and could enable high-volume use cases that aren’t economically feasible today, such as payments.
+
+However, alt DA layers are not a full remedy for transaction costs. Naturally, these DA layers will have throughput constraints and if demand exceeds supply, prices must increase. Even as DA gets cheaper, if demand for blockspace on the rollup exceeds the supply and [EIP-1559](https://eips.ethereum.org/EIPS/eip-1559) gas fee dynamics kick in, gas prices will increase exponentially until supply matches demand. BSC and Polygon cap out at 8M gas/s for comparison.
+
+From a security and reliability perspective, you get what you pay for. Today, no alt DA layer is on mainnet yet, and the integrations with existing stacks are alpha and haven’t been battle-tested. Downtime on the DA layer can lead to downtime on the rollup itself. DA layers will also need to provide ways to integrate with fraud-proving systems, adding additional trust assumptions and economic incentives to the challenge game.
+
+While there are many challenges ahead, as these alt DA layers earn a reputation for uptime, censorship resistance, and scalability, we’re excited to support them at Conduit. In the interim, technology like Arbitrum’s Data Availability Committee may prove to be the more pragmatic choice while alt DA layers take some time to mature.
+
+Where we think alt DA layers will be most effective in the short-term is reducing upfront costs for new applications to experiment as well as increase demand for their app with super cheap fees. Then, when ready, rollups can switch to Ethereum-based DA to maximize security for their chain in order to secure value. This is made more seamless with [EIP-4844](https://eips.ethereum.org/EIPS/eip-4844), where old DA states will expire from Ethereum, meaning nodes will need to sync from a snapshot instead of entirely from the Ethereum DA layer, simplifying any migration process.
+
+Alternatively, rollups may desire to keep using alt DA, even as their app demand grows. For example, gaming chains may want to keep fees low if the transactions themselves are not valuable.
+
+At Conduit, we strive to balance bleeding-edge technology with a pragmatic view of what is production-ready. We’re excited to support alt DA layers as they become battle-tested. If you’re a team that’s considering launching your own rollup with alt DA, please get in touch. Support for production-ready solutions on Conduit is coming soon!
