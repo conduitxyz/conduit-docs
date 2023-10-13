@@ -2,7 +2,8 @@ import React from "react";
 import { DocsThemeConfig } from "nextra-theme-docs";
 
 const config: DocsThemeConfig = {
-  docsRepositoryBase: "https://github.com/conduit/docs/tree/main/docs",
+  docsRepositoryBase:
+    "https://github.com/conduitxyz/conduit-docs/tree/main/conduit-docs",
   logo: (
     <svg fill="none" height="auto" viewBox="0 0 745 194" width="120">
       <path
