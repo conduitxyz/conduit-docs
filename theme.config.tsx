@@ -1,9 +1,8 @@
 import React from "react";
-import { DocsThemeConfig } from "nextra-theme-docs";
+import { DocsThemeConfig, useConfig } from "nextra-theme-docs";
 
 const config: DocsThemeConfig = {
-  docsRepositoryBase:
-    "https://github.com/conduitxyz/conduit-docs/tree/main/conduit-docs",
+  docsRepositoryBase: "https://github.com/conduitxyz/conduit-docs/blob/main",
   logo: (
     <svg fill="none" height="auto" viewBox="0 0 745 194" width="120">
       <path
@@ -58,6 +57,33 @@ const config: DocsThemeConfig = {
     return {
       titleTemplate: "%s – Conduit",
     };
+  },
+  head: () => {
+    const { title } = useConfig();
+
+    const imageUrl = new URL("https://docs.conduit.xyz/og-image.png");
+
+    const description =
+      "Deploy fully-managed, production-grade rollups on Ethereum in just a few clicks, no code required.";
+
+    const ogTitle = title ? `${title} – Conduit` : `Conduit`;
+    const ogDescription = description;
+    const ogImage = imageUrl.toString();
+
+    return (
+      <>
+        {/* Favicons, meta */}
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="description" content={ogDescription} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@conduitxyz" />
+        <meta name="twitter:image" content={ogImage} />
+        <meta name="twitter:title" content={ogTitle} />
+        <meta property="og:title" content={ogTitle} />
+        <meta property="og:description" content={ogDescription} />
+        <meta property="og:image" content={ogImage} />
+      </>
+    );
   },
   primaryHue: 180,
   primarySaturation: 65,
