@@ -1,5 +1,5 @@
 {
+  "bridge-ui": "Bridge UIs",
   "tracing-transactions": "Tracing Transactions",
-  "smart-contract-verification": "Smart Contract Verification",
-  "node": "Conduit node"
+  "smart-contract-verification": "Smart Contract Verification"
 }
