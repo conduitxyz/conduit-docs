@@ -1,7 +1,5 @@
 {
-  "op-stack": "OP Stack",
-  "arbitrum-nitro": "Arbitrum Nitro",
+  "deploy": "Deploy a Rollup",
   "get-access-keys": "Get Access Keys",
-  "upgrade-billing": "Upgrade Billing",
-  "adding-teammates": "Adding Teammates"
+  "node": "Run a Node"
 }
