@@ -1,8 +1,9 @@
 {
-  "index": "Documentation",
+  "index": "Introduction",
   "getting-started": "Getting Started",
   "guides": "Guides",
-  "resources": "Resources",
+  "stacks": "Stacks",
+  "support": "Support",
   "company": {
     "title": "Company",
     "type": "menu",
@@ -13,7 +14,7 @@
       },
       "blog": {
         "title": "Blog",
-        "href": "https://conduit.xyz/blog"
+        "href": "https://blog.conduit.xyz"
       },
       "careers": {
         "title": "Careers",
