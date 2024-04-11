@@ -1,6 +1,6 @@
 {
   "node": "Run a Node",
-  "bridge-ui": "Bridge UIs",
-  "tracing-transactions": "Tracing Transactions",
-  "smart-contract-verification": "Smart Contract Verification"
+  "bridge-ui": "Get a Bridge UI",
+  "tracing-transactions": "Trace Transactions",
+  "smart-contract-verification": "Verify Smart Contracts"
 }
