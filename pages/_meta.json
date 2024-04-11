@@ -1,8 +1,8 @@
 {
   "index": "Introduction",
-  "getting-started": "Getting Started",
+  "rollups": "Rollups-as-a-Service",
+  "rpc-keys": "RPC Keys",
   "guides": "Guides",
-  "stacks": "Stacks",
   "support": "Support",
   "company": {
     "title": "Company",
