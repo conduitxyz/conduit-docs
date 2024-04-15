@@ -1,6 +1,6 @@
 {
   "op-stack-node": "Run an OP Stack Node",
-  "arbitrum-node": "Run a Arbitrum Orbit Node",
+  "arbitrum-node": "Run an Arbitrum Orbit Node",
   "bridge-ui": "Get a Bridge UI",
   "tracing-transactions": "Trace Transactions",
   "smart-contract-verification": "Verify Smart Contracts"
