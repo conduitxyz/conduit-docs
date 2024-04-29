@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/getting-started/get-access-keys",
+      "destination": "/rpc-keys/get-rpc-keys",
+      "permanent": true
+    }
+  ]
+}
