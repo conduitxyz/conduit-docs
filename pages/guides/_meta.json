@@ -1,4 +1,6 @@
 {
+  "brand-customization": "Brand Customization",
+  "faucet": "Get Sepolia ETH",
   "op-stack-node": "Run an OP Stack Node",
   "arbitrum-node": "Run an Arbitrum Orbit Node",
   "bridge-ui": "Get a Bridge UI",
