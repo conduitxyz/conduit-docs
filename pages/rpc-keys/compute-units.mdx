@@ -4,18 +4,18 @@ We use Compute Units (CUs) to measure how many computational resources (CPU, RAM
 
 | Method                                  | Cost |
 | --------------------------------------- | ---- |
-| debug_traceTransaction                  | 309  |
-| debug_traceCall                         | 309  |
-| debug_traceBlockByHash                  | 497  |
-| debug_traceBlockByNumber                | 497  |
-| trace_get                               | 17   |
-| trace_block                             | 24   |
-| trace_transaction                       | 26   |
+| debug_traceTransaction                  | 300  |
+| debug_traceCall                         | 300  |
+| debug_traceBlockByHash                  | 300  |
+| debug_traceBlockByNumber                | 300  |
+| trace_get                               | 75   |
+| trace_block                             | 75   |
+| trace_transaction                       | 75   |
 | trace_call                              | 75   |
 | trace_rawTransaction                    | 75   |
 | trace_filter                            | 75   |
-| trace_replayTransaction                 | 2983 |
-| trace_replayBlockTransactions           | 2983 |
+| trace_replayTransaction                 | 3000 |
+| trace_replayBlockTransactions           | 3000 |
 | net_version                             | 0    |
 | eth_chainId                             | 0    |
 | eth_syncing                             | 0    |
@@ -38,27 +38,28 @@ We use Compute Units (CUs) to measure how many computational resources (CPU, RAM
 | eth_getUncleCountByBlockNumber          | 15   |
 | web3_clientVersion                      | 15   |
 | web3_sha3                               | 15   |
-| eth_getBlockByNumber                    | 16   |
-| eth_getStorageAt                        | 17   |
-| eth_getTransactionByHash                | 17   |
-| eth_gasPrice                            | 19   |
-| eth_getBalance                          | 19   |
-| eth_getCode                             | 19   |
+| eth_getBlockByNumber                    | 15   |
+| eth_getStorageAt                        | 15   |
+| eth_getTransactionByHash                | 15   |
+| eth_gasPrice                            | 20   |
+| eth_getBalance                          | 20   |
+| eth_getCode                             | 20   |
 | eth_getFilterChanges                    | 20   |
 | eth_newBlockFilter                      | 20   |
 | eth_newFilter                           | 20   |
-| eth_newPendingTransactionFilter         | 20   |
 | eth_getBlockTransactionCountByHash      | 20   |
 | eth_getBlockTransactionCountByNumber    | 20   |
-| eth_getProof                            | 21   |
-| eth_getBlockByHash                      | 21   |
-| eth_getTransactionCount                 | 26   |
-| eth_call                                | 26   |
+| eth_getProof                            | 20   |
+| eth_getBlockByHash                      | 20   |
+| eth_getTransactionCount                 | 20   |
+| eth_call                                | 75   |
 | eth_getFilterLogs                       | 75   |
 | eth_getLogs                             | 75   |
-| eth_estimateGas                         | 87   |
-| eth_sendRawTransaction                  | 250  |
+| eth_estimateGas                         | 75   |
+| eth_sendRawTransaction                  | 200  |
 | eth_getBlockReceipts                    | 200  |
+
+Other methods generally priced at 20 CUs
 
 ---
 
