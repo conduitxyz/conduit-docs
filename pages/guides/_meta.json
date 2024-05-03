@@ -1,8 +1,7 @@
 {
   "brand-customization": "Brand Customization",
   "faucet": "Get Sepolia ETH",
-  "op-stack-node": "Run an OP Stack Node",
-  "arbitrum-node": "Run an Arbitrum Orbit Node",
+  "run-a-node": "Run a Node",
   "bridge-ui": "Get a Bridge UI",
   "tracing-transactions": "Trace Transactions",
   "smart-contract-verification": "Verify Smart Contracts"
