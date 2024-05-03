@@ -5,6 +5,16 @@
       "source": "/getting-started/get-access-keys",
       "destination": "/rpc-keys/get-rpc-keys",
       "permanent": true
+    },
+    {
+      "source": "/guides/op-stack-node",
+      "destination": "/rollups/stacks/op-stack",
+      "permanent": true
+    },
+    {
+      "source": "/guides/arbitrum-node",
+      "destination": "/rollups/stacks/arbitrum-nitro",
+      "permanent": true
     }
   ]
 }
