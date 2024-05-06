@@ -16,24 +16,18 @@ We recommend you have this configuration to run a node:
 
 If you encounter problems with your node, please open a [GitHub issue](https://github.com/conduitxyz/node/issues/new/choose) or reach out on our [Discord](https://discord.com/invite/X5Yn3NzVRh):
 
-### Supported networks
-
-| Network      | Slug                    | Status |
-| ------------ | ----------------------- | :----: |
-| Zora Sepolia | zora-sepolia-0thyhxtf5e |   ✅   |
-| Zora Mainnet | zora-mainnet-0          |   ✅   |
-| PGN Sepolia  | pgn-sepolia-i4td3ji6i0  |   ✅   |
-
 ### Usage
 
-1. Select the network you want to run and set `CONDUIT_NETWORK` env variable. You will need to know the `slug` of the network. You can find this in the Conduit console. For public networks you can use the table above. Example:
+1. Select the network you want to run and set `CONDUIT_NETWORK` env variable. You will need to know the `slug` of the network, which you can find in the Conduit app by going to the [*Browse rollups* page](https://app.conduit.xyz/browse-networks) and clicking `Run a node` for the network you want to run. 
+
+Example:
 
 ```sh
 # for Zora Mainnet
 export CONDUIT_NETWORK=zora-mainnet-0
 ```
 
-Note: The external nodes feature must be enabled on the network for this to work. For the public networks above this is already set. If you are the owner of a network, you can enable this feature on the settings tab of your network in the Conduit console.
+*Note: The external nodes feature must be enabled on the network for this to work. If you are the owner of a network, you can enable this feature from your deployment settings in the Conduit app.*
 
 2. Download the required network configuration with:
 
