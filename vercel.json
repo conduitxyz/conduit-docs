@@ -3,7 +3,27 @@
   "redirects": [
     {
       "source": "/getting-started/get-access-keys",
-      "destination": "/rpc-keys/get-rpc-keys",
+      "destination": "/nodes/get-api-keys",
+      "permanent": true
+    },
+    {
+      "source": "/rpc-keys/get-rpc-keys",
+      "destination": "/nodes/get-api-keys",
+      "permanent": true
+    },
+    {
+      "source": "/rpc-keys/rpc-keys-overview",
+      "destination": "/nodes/nodes-overview",
+      "permanent": true
+    },
+    {
+      "source": "/rpc-keys/rpc-pricing",
+      "destination": "/nodes/nodes-pricing",
+      "permanent": true
+    },
+    {
+      "source": "/rpc-keys/compute-units",
+      "destination": "/nodes/compute-units",
       "permanent": true
     },
     {
