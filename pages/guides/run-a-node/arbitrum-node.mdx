@@ -1,46 +1,9 @@
 import { Callout } from 'nextra/components'
 
-# Run an Arbitrum Orbit Node
+# Run an Arbitrum Orbit node
 
 <Callout type="info" emoji="ℹ️">
   The external nodes feature must be enabled on the network for this to work. If you are the owner of a network, you can enable this feature from your deployment settings in the Conduit app.
 </Callout>
 
-Please follow the [Arbitrum Docs](https://docs.arbitrum.io/node-running/how-tos/running-an-orbit-node) on how to run an Orbit Node.
-
-You can get the required information, like chain-info by getting the slug for your Arbitrum Network like so:
-
-```sh
-curl https://api.conduit.xyz/file/v1/arbitrum/chaininfo/[slug_here]
-```
-
-This will give you a JSON like:
-
-```json
-{
-	"chain": {
-		"info-json": "[{\"chain-id\":21227,\"parent-chain-id\":11155111,\"chain-name\":\"conduit-orbit-deployer\",\"chain-config\":{\"chainId\":21227,\"homesteadBlock\":0,\"daoForkBlock\":null,\"daoForkSupport\":true,\"eip150Block\":0,\"eip150Hash\":\"0x0000000000000000000000000000000000000000000000000000000000000000\",\"eip155Block\":0,\"eip158Block\":0,\"byzantiumBlock\":0,\"constantinopleBlock\":0,\"petersburgBlock\":0,\"istanbulBlock\":0,\"muirGlacierBlock\":0,\"berlinBlock\":0,\"londonBlock\":0,\"clique\":{\"period\":0,\"epoch\":0},\"arbitrum\":{\"EnableArbOS\":true,\"AllowDebugPrecompiles\":false,\"DataAvailabilityCommittee\":true,\"InitialArbOSVersion\":11,\"InitialChainOwner\":\"0x6cEC73A48ED99F4f8E3527914320Df5fcBA4b475\",\"GenesisBlockNum\":0}},\"rollup\":{\"bridge\":\"0x5c13506c87575dB2f3c065De1FD4c4D810756F45\",\"inbox\":\"0x4B61abDcfB0F9C96eC81ADaeeD1254696265F0Ba\",\"sequencer-inbox\":\"0x05AbB1166c18DEf799a0d9BCbB1F957601C46849\",\"rollup\":\"0x6B3710d56B69faf2852f6020089D2205ca487Fbf\",\"validator-utils\":\"0xb33Dca7b17c72CFC311D68C543cd4178E0d7ce55\",\"validator-wallet-creator\":\"0x75500812ADC9E51b721BEa31Df322EEc66967DDF\",\"deployed-at\":5661747}}]",
-		"name": "conduit-orbit-deployer"
-	}
-}
-```
-
-The `info-json` corresponds to the `--chain.info-json` param and `name` corresponds to the `--chain.name` param.
-
-To receive live blocks from the relay, connect to the relay endpoint:
-
-```sh
---node.feed.input.url=wss://relay-[your_conduit_slug_here].t.conduit.xyz
-```
-
-If you are using the AnyTrust DAC for data avilability, your DAS aggregator url will be:
-
-```sh
-https://das-[your_conduit_slug_here].t.conduit.xyz
-```
-
-You will also need to enable the rest-aggregator
-
-```
---node.data-availability.rest-aggregator.enable
-```
+To run a node for an Arbitrum Orbit rollup deployed on Conduit, please follow [Arbitrum's documentation](https://docs.arbitrum.io/node-running/how-tos/running-an-orbit-node).
