@@ -62,7 +62,7 @@ const config: DocsThemeConfig = {
     return (
       <>
         {/* Favicons, meta */}
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
         <meta name="description" content={ogDescription} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@conduitxyz" />
