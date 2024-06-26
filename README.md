@@ -10,4 +10,4 @@ Then, run `pnpm dev` to start the development server and visit localhost:3000.
 
 ## Deploying
 
-`main` is deployed to `docs.conduit-stg.xyz` and `prod` is deployed to `docs.conduit.xyz`
+`main` is deployed to `docs.conduit.xyz`

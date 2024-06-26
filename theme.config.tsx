@@ -44,7 +44,7 @@ const config: DocsThemeConfig = {
   ),
   useNextSeoProps() {
     return {
-      titleTemplate: "%s — Conduit",
+      titleTemplate: "%s – Conduit",
     };
   },
   head: () => {
@@ -55,7 +55,7 @@ const config: DocsThemeConfig = {
     const description =
       "Deploy fully-managed, production-grade rollups on Ethereum in just a few clicks, no code required.";
 
-    const ogTitle = title ? `${title} — Conduit` : `Conduit`;
+    const ogTitle = title ? `${title} – Conduit` : `Conduit`;
     const ogDescription = description;
     const ogImage = imageUrl.toString();
 
