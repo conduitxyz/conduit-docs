@@ -1,6 +1,5 @@
 {
-    "overview": "Overview",
-    "deploy": "Deploy a Rollup",
-    "stacks": "Supported Stacks"
-  }
-  
+  "overview": "Overview",
+  "deploy": "Deploy a Rollup",
+  "stacks": "Supported Stacks"
+}

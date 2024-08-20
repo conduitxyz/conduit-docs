@@ -1,10 +1,11 @@
-import { Callout } from 'nextra/components'
-
+import { Callout } from "nextra/components";
 
 # Run an OP Stack node
 
 <Callout type="info" emoji="ℹ️">
-  The external nodes feature must be enabled on the network for this to work. If you are the owner of a network, you can enable this feature from your deployment settings in the Conduit app.
+  The external nodes feature must be enabled on the network for this to work. If
+  you are the owner of a network, you can enable this feature from your
+  deployment settings in the Conduit app.
 </Callout>
 
 To run a self-hosted node for an OP Stack rollup deployed on Conduit, please follow [Optimism's documentation](https://docs.optimism.io/builders/node-operators/tutorials/node-from-docker).
@@ -12,15 +13,17 @@ To run a self-hosted node for an OP Stack rollup deployed on Conduit, please fol
 You can fetch `rollup.json` and `genesis.json` from [Browse Rollups](https://app.conduit.xyz/browse-networks), clicking on `Run a node` for the network.
 
 You can get `OP_NODE_P2P_BOOTNODES` using
+
 ```txt copy
 https://api.conduit.xyz/public/network/bootnodes/<network-slug>
 ```
 
-and `OP_NODE_P2P_STATIC` via 
+and `OP_NODE_P2P_STATIC` via
+
 ```txt copy
 https://api.conduit.xyz/public/network/staticPeers/<network-slug>
 ```
 
 For `OP_GETH_SEQUENCER_HTTP`, you can use the public RPC of your network. For production usage, you can get an API Key with [Conduit Nodes](https://conduit.xyz/nodes).
 
-At this time, Conduit cannot offer support for self-hosted nodes. If you need support, consider using [Conduit Nodes](https://conduit.xyz/nodes), the managed version of nodes for your RPC needs, including autoscaling, backups, monitoring, automatic fork support, and much more. 
+At this time, Conduit cannot offer support for self-hosted nodes. If you need support, consider using [Conduit Nodes](https://conduit.xyz/nodes), the managed version of nodes for your RPC needs, including autoscaling, backups, monitoring, automatic fork support, and much more.
