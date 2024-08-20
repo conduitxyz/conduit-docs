@@ -1,0 +1,303 @@
+## Introduction
+
+Conduit VRF can generate randomness from two different depending on your preferences:
+
+1. [Drand](https://drand.love/)
+    1. Public and verifiable source of randomness
+    2. Slower (~3s response time after the transaction has been sequenced, depending on the `roundId` requested)
+2. Google KMS Hardware Randomness
+    1. Not public or verifiable by a third party
+    2. Fast (250ms or sooner on Arbitrum-nitro; ~2s for OP stack L2s and ~1s for OP stack L3s)
+
+See [Choosing a Source of Randomness](https://www.notion.so/Internal-Customer-Conduit-Oracle-VRF-HowTo-e7340ab9dc314b4ea89d4cd76aa26745?pvs=21) to help decide which is right for your application.
+
+### Integrating VRF into a Smart Contract
+
+The flow for requesting a random number as follows:
+
+- A contract will `request` a random number from the `ConduitVRFCoordinator` contract
+- Once confirmed, we will `fulfillRandomness` on the contract that initiated the request
+
+#### IConduitVRFConsumer
+
+To request a random number from the VRF, the calling contract must implement this interface:
+
+```solidity
+interface IConduitVRFConsumer {
+    function fulfillRandomness(
+        uint256 randomness,
+        uint256 requestId,
+        bytes calldata data
+    ) external;
+}
+```
+
+The `requestId` is the request ID that initiated this response, `randomness` is the random number, and `data` is any arbitrary data that you passed in on the request.
+
+### Requesting a Random Number from the Oracle
+
+To kick off a request to the oracle, you must call the following function:
+
+```solidity
+interface IConduitVRFCoordinator {
+	  /// @notice Request a random number (Drand Randomness)
+    /// @param _roundId The drand roundId to request a random number for. If it is 0, the
+    /// randomness will be sourced from Conduit's KMS instead of Drand. If providing a _roundId,
+    /// always make sure that the round has yet to be broadcasted on drand, otherwise your
+    /// application risks a front-running attack.
+    /// @param _callbackGasLimit The gas limit to set for the callback, `fulfillRandomness`
+    /// @param _data The data to send with the request, which will be passed back upon returning
+    /// @return requestId The unique identifier for this request
+    function request(
+        uint256 _roundId,
+        uint32 _callbackGasLimit,
+        bytes calldata _data
+    ) external payable returns (uint256);
+}
+```
+
+- The `_roundId` is the Drand round ID to respond with. It should always be a future round ID, not a past one. If it is set to `0`, we will instead grab the random number from the KMS.
+    - Note that if you do opt to use KMS, we have a convenience function which automatically sets `_roundId` to `0` for you:
+    
+    ```solidity
+      /// @notice Request a random number (KMS randomness)
+      /// @dev under the hood, this is just request(0, _callbackGasLimit, _data), requesting a random number
+      /// from the kms instead of Drand.
+      /// @param _callbackGasLimit The gas limit to set for the callback, `fulfillRandomness`
+      /// @param _data The data to send with the request, which will be passed back upon returning
+      /// @return requestId The unique identifier for this request
+      function request(
+          uint32 _callbackGasLimit,
+          bytes calldata _data
+      ) external payable returns (uint256);
+    ```
+    
+- The `_callbackGasLimit` specifies how much gas the callback function requires when the keeper delivers the value and calls `receivedRandomNumber()` .
+- The request must send a `msg.value` greater than or equal to the price of the call. See the [pricing](https://www.notion.so/Internal-Customer-Conduit-Oracle-VRF-HowTo-e7340ab9dc314b4ea89d4cd76aa26745?pvs=21) section for more details
+- `_data` can be any arbitrary bytes you want to receive in the callback.
+- The returned `uint256` is the `_id` that will be passed back when the keeper calls `fulfillRandomness(randomness, requestId, data)`.
+
+### Example Implementation
+
+```solidity
+pragma solidity ^0.8.19;
+
+import "../interfaces/IConduitVRFCoordinator.sol";
+import "../interfaces/IConduitVRFConsumer.sol";
+import "../ConduitVRFConsumerBase.sol";
+
+contract DieRoller is ConduitVRFConsumerBase {
+    IConduitVRFCoordinator public vrf;
+    mapping(uint256 => uint8) public dieRolls;
+
+    constructor(address _vrf) {
+        vrf = IConduitVRFCoordinator(_vrf);
+    }
+
+    function _conduitVrf() internal view override returns (address) {
+        return address(vrf);
+    }
+
+    function rollDie() external payable returns (uint256) {
+        return vrf.request{value: msg.value}(_calculateRound(), 120000, "");
+    }
+
+    function _fulfillRandomness(
+        uint256 _randomness,
+        uint256 _id,
+        bytes memory
+    ) internal override {
+        require(msg.sender == address(vrf), "Only vrf can call callback");
+
+        require(dieRolls[_id] == 0, "Request was already filled");
+        dieRolls[_id] = uint8(_randomness % 6) + 1;
+    }
+
+    receive() external payable {}
+}
+```
+
+## Pricing
+
+The pricing formula for a VRF request is
+
+`1.25 * (tx.gasprice * (40000 + _callbackGasLimit))`
+
+This formula takes into account the gas required to `fulfillRandomness` and adds a `25%` fee on top.
+
+### Explanation
+
+To `fulfillRadnomness`, we will consume the entire `_callbackGasLimit`, plus 40,000 of overhead gas to account for bookkeeping, emitting logs, etc. To get the price of that gas in ether, we multiply by the `tx.gasprice`. Finally we charge a `25%` fee on top of that, so we multiply by `1.25` to get the final price. This amount must be sent in the `msg.value` of your call to `request()` , otherwise the request will revert with `VRF_InsufficientFunds`.
+
+### Pricing Example
+
+Let’s say that you need 200,000 gas for the callback and the current gas price is 0.01GWei. First, we can calculate the raw gas amount: `(1.25)(0.01GWei * (200000 + 40000))`
+
+First let’s substitute all uints for wei to make things easier:
+
+`(1.25)(10000000 * (240000))` 
+
+and solve to get `3000000000000` wei or `0.000003` ether. This is how much you need to send in the `msg.value` to the `request()` function. If you send any extra, it will be refunded, but it will revert with `VRF_InsufficientFunds` for anything less.
+
+## Choosing a Source of Randomness
+
+Both Drand and KMS are secure sources of randomness. With Drand, anyone can check that the oracle returned the requested Drand `roundId`, while Google KMS has no publicly verifiable commitment. Both sources of randomness are enabled by default, but we can disable one or the other at the contract level if desired. Contact support if the need arises.
+
+Calling for Drand and calling for KMS both require you to specify the `_callbackGasLimit` , but Drand also requires you to request a `_roundId` according to the future Drand block you want:
+
+- For KMS call: `request(uint32 _callbackGasLimit)`
+- For Drand call: `request(uint256 _roundId, uint32 *_*callbackGasLimit)`
+
+Drand produces chunks of randomness in rounds, so the `_roundId` should be the next available round. You can call up to 20 rounds in the future, but there is never a need to wait that long. The next available round can be calculated with the following function
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.19;
+
+abstract contract BaseVRFConsumer {
+    uint256 constant GENESIS = 1692803367;
+    uint256 constant ROUND_DURATION = 3;
+
+    function _calculateRound() private view returns (uint256) {
+        return ((block.timestamp - GENESIS) / ROUND_DURATION) + 2;
+    }
+}
+```
+
+## Migrating From Chainlink VRF
+
+First you have to deploy a `VRFCoordinatorV2Adapter` by calling this function on the `VRFCoordinatorV2AdapterFactory` :
+
+```solidity
+/// @notice Create a new instance of VRFCoordinatorV2Adapter.
+/// @dev Creates a new VRFCoordinatorV2Adapter contract with the provided operator address.
+/// @param requesters The addresses that are able to request for randomness.
+/// @return adapter The newly created VRFCoordinatorV2Adapter instance.
+function make(
+    address[] memory requesters
+) external returns (VRFCoordinatorV2Adapter);
+```
+
+For `requesters` , pass in an array of all the contracts that will be authorized to make VRF requests.
+
+The address of this factory will be given to you by Conduit. Then, all you have to do is point your VRF consumer at the deployed adapter contract, and your contract will receive random numbers as if it were calling Chainlink VRF.
+
+### Funding a Chainlink VRF Adapter
+
+The chainlink adapter must be funded with the gas token in order to make requests. If it does not have enough gas to pay for the requests, all requests will fail. Funding the adapter is as simple as sending the gas token to the contract. The deployer of the adapter can withdraw the extra funds at any time by calling `withdraw()` on the adapter.
+
+### Differences between Conduit VRF and Chainlink VRF
+
+While the interfaces between the `VRFCoordinatorV2Adapter` and Chainlink’s VRF are compatible, it is important to note a few differences:
+
+- Functionality for establishing new subscriptions is disabled
+- When your contract calls`requestRandomWords` - the `keyHash`, `subId`, and `minimumRequestConfirmations` are ignored, and just `callbackGasLimit` and `numWords` are used
+
+### Example
+
+```solidity
+pragma solidity ^0.8.19;
+
+import {VRFCoordinatorV2Interface} from "@chainlink/v0.8/vrf/interfaces/VRFCoordinatorV2Interface.sol";
+import {VRFConsumerBaseV2} from "@chainlink/v0.8/vrf/VRFConsumerBaseV2.sol";
+
+contract ChainlinkDieRoller is VRFConsumerBaseV2 {
+    VRFCoordinatorV2Interface public vrf;
+    mapping(uint256 => uint8) public dieRolls;
+
+    constructor(address _vrf) VRFConsumerBaseV2(_vrf) {
+        vrf = VRFCoordinatorV2Interface(_vrf);
+    }
+
+    function setVrf(address _vrf) public {
+        vrf = VRFCoordinatorV2Interface(_vrf);
+    }
+
+    function rollDie() external returns (uint256) {
+        return vrf.requestRandomWords(bytes32(0), 0, 0, 120000, 1);
+    }
+
+    function fulfillRandomWords(
+        uint256 requestId,
+        uint256[] memory randomWords
+    ) internal override {
+        require(msg.sender == address(vrf), "Only vrf can call callback");
+
+        require(dieRolls[requestId] == 0, "Request was already filled");
+        dieRolls[requestId] = uint8(randomWords[0] % 6) + 1;
+    }
+}
+
+```
+
+To reiterate: the only prerequisite to using this is to
+
+1. Call `make(address[] requesters)` on the `VRFCoordinatorV2AdapterFactory`
+2. Pass the contract deployed from 1. into the constructor of the `ChainlinkDieRoller`
+3. Continue making requests as normal
+
+## Migrating From Gelato VRF
+
+All Gelato VRF consumers must inherit from the `GelatoVRFConsumerBase` contract [here](https://github.com/gelatodigital/vrf-contracts/blob/main/contracts/GelatoVRFConsumerBase.sol). To make your consumer compatible with Conduit VRF, you must swap out this `GelatoVRFConsumerBase` contract with the `ConduitGelatoVRFConsumerBase` contract here [TODO add the link here].
+
+### Funding the Gelato Consumer
+
+Your contract that inherits from `ConduitGelatoVRFConsumerBase` must be funded with the gas token in order to make requests. If it does not have enough gas to pay for the requests, all requests will fail. Funding the adapter is as simple as sending the gas token to the contract. The deployer of the adapter can withdraw the extra funds at any time by calling `withdraw()` on the adapter.
+
+### Example
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.19;
+
+import "../compatibility/gelato/GelatoCompatibleVRFConsumerBase.sol";
+
+contract GelatoDieRoller is ConduitGelatoVRFConsumerBase {
+    address private immutable _operatorAddr;
+    mapping(uint256 => uint8) public dieRolls;
+
+    function _operator() internal view override returns (address) {
+        return _operatorAddr;
+    }
+
+    function op() public view returns (address) {
+        return _operatorAddr;
+    }
+
+    constructor(address operator) {
+        _operatorAddr = operator;
+    }
+
+    function _fulfillRandomness(
+        uint256 randomness,
+        uint256 requestId,
+        bytes memory
+    ) internal override {
+        require(dieRolls[requestId] == 0, "Request was already filled");
+        dieRolls[requestId] = uint8(randomness % 6) + 1;
+    }
+
+    function rollDie() public {
+        _requestRandomness("");
+    }
+}
+```
+
+To reiterate: the only changes that must be made for Gelato compatability are
+
+- inherit from the `GelatoCompatibleVRFConsumerBase` instead of the `GelatoVRFConsumerBase` from Gelato’s repo
+- Fund your contract with the gas token so that it can make requests
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.19;
+
+abstract contract BaseVRFConsumer {
+    uint256 constant GENESIS = 1692803367;
+    uint256 constant ROUND_DURATION = 3;
+
+    function _calculateRound() private view returns (uint256) {
+        return ((block.timestamp - GENESIS) / ROUND_DURATION) + 2;
+    }
+}
+```
