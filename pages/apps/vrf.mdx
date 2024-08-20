@@ -3,11 +3,11 @@
 Conduit VRF can generate randomness from two different depending on your preferences:
 
 1. [Drand](https://drand.love/)
-    1. Public and verifiable source of randomness
-    2. Slower (~3s response time after the transaction has been sequenced, depending on the `roundId` requested)
+   1. Public and verifiable source of randomness
+   2. Slower (~3s response time after the transaction has been sequenced, depending on the `roundId` requested)
 2. Google KMS Hardware Randomness
-    1. Not public or verifiable by a third party
-    2. Fast (250ms or sooner on Arbitrum-nitro; ~2s for OP stack L2s and ~1s for OP stack L3s)
+   1. Not public or verifiable by a third party
+   2. Fast (250ms or sooner on Arbitrum-nitro; ~2s for OP stack L2s and ~1s for OP stack L3s)
 
 See [Choosing a Source of Randomness](https://www.notion.so/Internal-Customer-Conduit-Oracle-VRF-HowTo-e7340ab9dc314b4ea89d4cd76aa26745?pvs=21) to help decide which is right for your application.
 
@@ -57,21 +57,19 @@ interface IConduitVRFCoordinator {
 ```
 
 - The `_roundId` is the Drand round ID to respond with. It should always be a future round ID, not a past one. If it is set to `0`, we will instead grab the random number from the KMS.
-    - Note that if you do opt to use KMS, we have a convenience function which automatically sets `_roundId` to `0` for you:
-    
-    ```solidity
-      /// @notice Request a random number (KMS randomness)
-      /// @dev under the hood, this is just request(0, _callbackGasLimit, _data), requesting a random number
-      /// from the kms instead of Drand.
-      /// @param _callbackGasLimit The gas limit to set for the callback, `fulfillRandomness`
-      /// @param _data The data to send with the request, which will be passed back upon returning
-      /// @return requestId The unique identifier for this request
-      function request(
-          uint32 _callbackGasLimit,
-          bytes calldata _data
-      ) external payable returns (uint256);
-    ```
-    
+  - Note that if you do opt to use KMS, we have a convenience function which automatically sets `_roundId` to `0` for you:
+  ```solidity
+    /// @notice Request a random number (KMS randomness)
+    /// @dev under the hood, this is just request(0, _callbackGasLimit, _data), requesting a random number
+    /// from the kms instead of Drand.
+    /// @param _callbackGasLimit The gas limit to set for the callback, `fulfillRandomness`
+    /// @param _data The data to send with the request, which will be passed back upon returning
+    /// @return requestId The unique identifier for this request
+    function request(
+        uint32 _callbackGasLimit,
+        bytes calldata _data
+    ) external payable returns (uint256);
+  ```
 - The `_callbackGasLimit` specifies how much gas the callback function requires when the keeper delivers the value and calls `receivedRandomNumber()` .
 - The request must send a `msg.value` greater than or equal to the price of the call. See the [pricing](https://www.notion.so/Internal-Customer-Conduit-Oracle-VRF-HowTo-e7340ab9dc314b4ea89d4cd76aa26745?pvs=21) section for more details
 - `_data` can be any arbitrary bytes you want to receive in the callback.
@@ -135,7 +133,7 @@ Let’s say that you need 200,000 gas for the callback and the current gas price
 
 First let’s substitute all uints for wei to make things easier:
 
-`(1.25)(10000000 * (240000))` 
+`(1.25)(10000000 * (240000))`
 
 and solve to get `3000000000000` wei or `0.000003` ether. This is how much you need to send in the `msg.value` to the `request()` function. If you send any extra, it will be refunded, but it will revert with `VRF_InsufficientFunds` for anything less.
 
