@@ -1,0 +1,5 @@
+pnpm-lock.yaml
+build
+.vercel
+node_modules
+.vscode
