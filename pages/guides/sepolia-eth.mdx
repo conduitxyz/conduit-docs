@@ -1,4 +1,7 @@
 import { Steps } from "nextra/components";
+import Image from "next/image";
+
+import faucetImage from "./conduit-dashboard-faucet.png";
 
 # Get Sepolia ETH
 
@@ -7,9 +10,27 @@ To get Sepolia (testnet) ETH on your chain, you'll need to acquire some from a f
 ## Steps
 
 <Steps>
+
 ### Choose a faucet
 
-First, head to one of our recommended faucets: - [Superchain Faucet](https://app.optimism.io/faucet) _(Requires GitHub verification)_ - [Paradigm MultiFaucet](https://faucet.paradigm.xyz/) _(Requires Twitter sign in)_ - [Alchemy Faucet](https://www.alchemy.com/faucets/ethereum-sepolia) _(Requires Alchemy account)_
+First, head to your rollup's dashboard in the [Conduit app](https://app.conduit.xyz/). On the right sidebar of the dashboard below the Tracer we have a built-in faucet for Sepolia ETH.
+
+<br />
+
+<Image
+  src={faucetImage}
+  width={400}
+  height={211}
+  alt="Sepolia Faucet"
+  style={{ borderRadius: "0.75rem" }}
+/>
+
+Or, head to the public [Conduit Faucet](https://faucet.conduit.xyz) _(requires GitHub sign in)_ directly to get Sepolia ETH.
+
+If you need more Sepolia ETH, here are some other recommended faucets:
+
+- [Superchain Faucet](https://app.optimism.io/faucet) _(requires Privy sign in)_
+- [Paradigm MultiFaucet](https://faucet.paradigm.xyz/) _(requires Twitter sign in)_
 
 ### Receive funds
 
