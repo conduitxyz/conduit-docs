@@ -1,0 +1,30 @@
+import { Steps } from "nextra/components";
+import { Callout } from "nextra/components";
+
+# Custom Domains
+
+Easily configure your Conduit RPC and block explorer to be accessible through a **custom domain**.
+
+## Steps
+
+<Steps>
+### Sign In
+Log in to the [Conduit app](https://app.conduit.xyz).
+ 
+### Access Settings
+Navigate to your deployment dashboard. Click `Settings`, and then select `Customization` from the sidebar. Scroll down to the `Custom Domains` section.
+
+### Add custom domain 
+Enter your custom domain for your Conduit RPC and/or Blockscout explorer.
+
+### Configure DNS Records
+Add the provided CNAME record to your domain's DNS settings. You can typically do this in your hosting provider's control panel. Note that DNS resolution may take up to 24 hours, depending on your provider.
+
+### Disable Cloudflare Proxying (if applicable)
+If you're using Cloudflare, ensure that proxying is disabled for the subdomain you're setting up.
+
+### Done!
+After DNS propagation is complete, you can start using your custom Conduit RPC URL or access your block explorer directly through your personalized domain.
+
+</Steps>
+
