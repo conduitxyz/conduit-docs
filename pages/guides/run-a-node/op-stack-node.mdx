@@ -1,29 +1,60 @@
 import { Callout } from "nextra/components";
+import { Steps } from "nextra/components";
 
 # Run an OP Stack node
 
 <Callout type="info" emoji="ℹ️">
-  The external nodes feature must be enabled on the network for this to work. If
-  you are the owner of a network, you can enable this feature from your
-  deployment settings in the Conduit app.
+  At this time, Conduit cannot offer support for self-hosted nodes. If you need
+  support, consider using [Conduit Nodes](https://conduit.xyz/nodes), the
+  managed version of nodes for your RPC needs, including autoscaling, backups,
+  monitoring, automatic fork support, and much more.
 </Callout>
 
-To run a self-hosted node for an OP Stack rollup deployed on Conduit, please follow [Optimism's documentation](https://docs.optimism.io/builders/node-operators/tutorials/node-from-docker).
+To run a self-hosted node for an OP Stack rollup deployed on Conduit, please follow the steps below to configure the necessary settings and gather all required information. Afterwards, you can proceed with [Optimism's documentation](https://docs.optimism.io/builders/node-operators/tutorials/node-from-docker) on how to run a node.
 
-You can fetch `rollup.json` and `genesis.json` from [Browse Rollups](https://app.conduit.xyz/browse-networks), clicking on `Run a node` for the network.
+<Steps>
+### Sign In
+Log in to the [Conduit app](https://app.conduit.xyz).
+ 
+### Access Settings
+Navigate to your deployment dashboard. Click on `Settings`, then select `General` from the sidebar.
 
-You can get `OP_NODE_P2P_BOOTNODES` using
+### Enable external Nodes
+
+Acitvate the `Enable external nodes` setting. **Note**: If you wish to disable this setting later, please contact our [Support](https://conduitxyz.typeform.com/to/kGF2oAj1#source=website).
+
+### Gather required Information
+
+#### `rollup.json` and `genesis.json`
+
+In your deployment dashboard, navigate to `Overview`. Click the `Run a Node` button on the right to get `rollup.json` and `genesis.json` files.
+
+#### P2P Configuration
+
+To obtain the values for `OP_NODE_P2P_BOOTNODES`, replace `<network-slug>` in the following API call:
 
 ```txt copy
 https://api.conduit.xyz/public/network/bootnodes/<network-slug>
 ```
 
-and `OP_NODE_P2P_STATIC` via
+Repeat the same for `OP_NODE_P2P_STATIC` with the following API call:
 
 ```txt copy
 https://api.conduit.xyz/public/network/staticPeers/<network-slug>
 ```
 
-For `OP_GETH_SEQUENCER_HTTP`, you can use the public RPC of your network. For production usage, you can get an API Key with [Conduit Nodes](https://conduit.xyz/nodes).
+Consider setting `OP_NODE_P2P_SYNC_ONLYREQTOSTATIC` to `true` if network reliability is a concern, especially when dealing with networks that may have unreliable peers. This setting ensures more consistent and stable synchronization by forcing the node to request sync data only from `OP_NODE_P2P_STATIC`.
 
-At this time, Conduit cannot offer support for self-hosted nodes. If you need support, consider using [Conduit Nodes](https://conduit.xyz/nodes), the managed version of nodes for your RPC needs, including autoscaling, backups, monitoring, automatic fork support, and much more.
+#### Submitting Transactions to your Node (if required)
+
+If you plan to submit transactions to your node, set the `public RPC URL` of your network as the `OP_GETH_SEQUENCER_HTTP`. For production usage, you can generate an API Key via [Conduit Nodes](https://conduit.xyz/nodes). You can find the `public RPC URL` in the dashboard.
+
+### Next Steps
+
+You should now have all the information about your Rollup that is needed to run your own self-hosted nodes. Follow [Optimism's documentation](https://docs.optimism.io/builders/node-operators/tutorials/node-from-docker) for the next Steps.
+
+</Steps>
+
+## Monitoring Sync Progress
+
+Run [`optimism_syncStatus`](https://docs.optimism.io/builders/node-operators/json-rpc#optimism_syncstatus) to check the current sync status of your node. From the output, note the block number associated with the sync status. Search for this block number on your block explorer to determine when it was processed on our end. By comparing the block's processing time, you can estimate how far behind your node is in the synchronization process.
