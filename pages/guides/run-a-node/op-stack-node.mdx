@@ -43,11 +43,11 @@ Repeat the same for `OP_NODE_P2P_STATIC` with the following API call:
 https://api.conduit.xyz/public/network/staticPeers/<network-slug>
 ```
 
-Consider setting `P_NODE_P2P_SYNC_ONLYREQTOSTATIC` to `true` if network reliability is a concern, especially when dealing with networks that may have unreliable peers. This setting ensures more consistent and stable synchronization by forcing the node to request sync data only from `OP_NODE_P2P_STATIC`.
+Consider setting `OP_NODE_P2P_SYNC_ONLYREQTOSTATIC` to `true` if network reliability is a concern, especially when dealing with networks that may have unreliable peers. This setting ensures more consistent and stable synchronization by forcing the node to request sync data only from `OP_NODE_P2P_STATIC`.
 
-#### OP-GETH Sequencer HTTP
+#### Submit Transactions to your Node (if required)
 
-You can set the public RPC of your network as the `OP_GETH_SEQUENCER_HTTP`. For **production usage**, you can generate an API Key with [Conduit Nodes](https://conduit.xyz/nodes).
+If you plan to submit transactions to your node, set the `public RPC URL` of your network as the `OP_GETH_SEQUENCER_HTTP`. For production usage, you can generate an API Key via [Conduit Nodes](https://conduit.xyz/nodes). You can find the `public RPC URL` in the dashboard.
 
 ### Next Steps
 
