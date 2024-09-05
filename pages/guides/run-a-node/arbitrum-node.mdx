@@ -1,13 +1,42 @@
 import { Callout } from "nextra/components";
+import { Steps } from "nextra/components";
 
 # Run an Arbitrum Orbit node
 
 <Callout type="info" emoji="ℹ️">
-  The external nodes feature must be enabled on the network for this to work. If
-  you are the owner of a network, you can enable this feature from your
-  deployment settings in the Conduit app.
+  At this time, Conduit cannot offer support for self-hosted nodes. If you need
+  support, consider using [Conduit Nodes](https://conduit.xyz/nodes), the
+  managed version of nodes for your RPC needs, including autoscaling, backups,
+  monitoring, automatic fork support, and much more.
 </Callout>
 
-To run a node for an Arbitrum Orbit rollup deployed on Conduit, please follow [Arbitrum's documentation](https://docs.arbitrum.io/node-running/how-tos/running-an-orbit-node).
+To run a self-hosted node for an Arbitrum rollup deployed on Conduit, please follow the steps below to configure the necessary settings and gather all required information. Afterwards, you can proceed with [Arbitrum's documentation](https://docs.arbitrum.io/node-running/how-tos/running-an-orbit-node) on how to run a node.
 
-The sequencer feed input url will be `https://relay-[your_conduit_slug_here].t.conduit.xyz`
+<Steps>
+### Sign In
+Log in to the [Conduit app](https://app.conduit.xyz).
+ 
+### Access Settings
+Navigate to your deployment dashboard. Click on `Settings`, then select `General` from the sidebar.
+
+### Enable external Nodes
+
+Activate the `Enable external nodes` setting. **Note**: If you wish to disable this setting later, please contact our [Support](https://portal.usepylon.com/conduit-xyz/forms/support-request).
+
+### Gather required Information from the Deployment Dashboard
+
+Navigate to the Deployment Dashboard. Go to the `Overview` section and click the `Run a Node` button on the right side.
+
+#### Access Configuration Files
+
+The popup will provide the `rollup.json` and `genesis.json` files.
+
+#### Sequencer Feed Relay Endpoint
+
+You will find the `Websocket URL` for the `Sequencer Feed Relay Endpoint` in the same popup.
+
+### Next Steps
+
+You should now have all the information about your Rollup that is needed to run your own self-hosted node. Follow [Arbitrum's documentation](https://docs.arbitrum.io/node-running/how-tos/running-an-orbit-node) for the next Steps.
+
+</Steps>

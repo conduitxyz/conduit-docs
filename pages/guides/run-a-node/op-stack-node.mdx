@@ -23,27 +23,19 @@ Navigate to your deployment dashboard. Click on `Settings`, then select `General
 
 Activate the `Enable external nodes` setting. **Note**: If you wish to disable this setting later, please contact our [Support](https://portal.usepylon.com/conduit-xyz/forms/support-request).
 
-### Gather required Information
+### Gather required Information from the Deployment Dashboard
 
-#### `rollup.json` and `genesis.json`
+Navigate to the Deployment Dashboard. Go to the `Overview` section and click the `Run a Node` button on the right side.
 
-In your deployment dashboard, navigate to `Overview`. Click the `Run a Node` button on the right to get `rollup.json` and `genesis.json` files.
+#### Access Configuration Files
+
+The popup will provide the `rollup.json` and `genesis.json` files.
 
 #### P2P Configuration
 
-To obtain the values for `OP_NODE_P2P_BOOTNODES`, replace `<network-slug>` in the following API call:
+You will find the values for `OP_NODE_P2P_BOOTNODES` and `OP_NODE_P2P_STATIC` in the same popup.
 
-```txt copy
-https://api.conduit.xyz/public/network/bootnodes/<network-slug>
-```
-
-Repeat the same for `OP_NODE_P2P_STATIC` with the following API call:
-
-```txt copy
-https://api.conduit.xyz/public/network/staticPeers/<network-slug>
-```
-
-Consider setting `OP_NODE_P2P_SYNC_ONLYREQTOSTATIC` to `true` if network reliability is a concern, especially when dealing with networks that may have unreliable peers. This setting ensures more consistent and stable synchronization by forcing the node to request sync data only from `OP_NODE_P2P_STATIC`.
+**Addional Settings:** Consider setting `OP_NODE_P2P_SYNC_ONLYREQTOSTATIC` to `true` if network reliability is a concern, especially when dealing with networks that may have unreliable peers. This setting ensures more consistent and stable synchronization by forcing the node to request sync data only from `OP_NODE_P2P_STATIC`.
 
 #### Submitting Transactions to your Node (if required)
 
@@ -51,7 +43,7 @@ If you plan to submit transactions to your node, set the `public RPC URL` of you
 
 ### Next Steps
 
-You should now have all the information about your Rollup that is needed to run your own self-hosted nodes. Follow [Optimism's documentation](https://docs.optimism.io/builders/node-operators/tutorials/node-from-docker) for the next Steps.
+You should now have all the information about your Rollup that is needed to run your own self-hosted node. Follow [Optimism's documentation](https://docs.optimism.io/builders/node-operators/tutorials/node-from-docker) for the next Steps.
 
 </Steps>
 
