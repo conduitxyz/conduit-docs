@@ -1,16 +1,21 @@
 ## Native USDC Bridge
+
 This integration follows Circle’s specification and process for deploying bridged USDC onto your rollup, and can be upgraded into native USDC at a later date.
 
 ## Bridging Using the Standard
+
 Once installed, you should no longer bridge USDC using the standard bridge. Instead, use the deployed addresses.
 If you are using SuperBridge for your bridge UI, contact them to automatically add your USDC bridge to their UI.
 If you are using a different provier for the bridge UI, ask them, otherwise you risk fragmenting your liquidity between two bridged versions of USDC.
 
 ## Bridging Via the CLI
+
 Alternatively, you can bridge USDC using `cast` as follows:
 
 ### Optimism
+
 On the settlement layer, send the following transactions to bridge USDC to your rollup:
+
 ```bash
 # first approve USDC
 cast send $L1_USDC_ADDRESS "approve(address,uint256)" $L1_USDC_BRIDGE_ADDRESS $AMOUNT --rpc-url $SETTLEMENT_RPC_URL --private-key $PRIVATE_KEY
@@ -21,6 +26,7 @@ cast send $L1_USDC_BRIDGE_ADDRESS "sendMessage(address,uint256,uint32)" $(cast w
 
 After a few minutes, your deposit should be processsed and available on your rollup.
 To withdraw, you can send these transactions to your rollup:
+
 ```bash
 # first approve USDC
 cast send $L2_USDC_ADDRESS "approve(address,uint256)" $L2_USDC_BRIDGE_ADDRESS $AMOUNT --rpc-url $ROLLUP_RPC_URL --private-key $PRIVATE_KEY
@@ -30,4 +36,5 @@ cast send $L2_USDC_BRIDGE_ADDRESS "sendMessage(address,uint256,uint32)" $(cast w
 ```
 
 ### Arbitrum
+
 COMING SOON
