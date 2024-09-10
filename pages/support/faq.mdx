@@ -19,3 +19,13 @@ Since rollup deployment is permissionless and their names, icons, or IDs aren't 
 #### How do I cancel a testnet or mainnet subscription plan?
 
 Deleting your testnet or mainnet rollup automatically cancels the subscription associated with that deployment. You can delete your rollup from Settings > General in your deployment dashboard.
+
+---
+
+#### Why is contract verification failing when I deploy using `CREATE2`, and how can I resolve it?
+
+Deploying a contract with `CREATE2` generates a deterministic address through an internal transaction, ensuring the same address is created regardless of the deployment's origin. Due to rising costs, we've disabled internal transaction indexing in Blockscout, so contracts deployed via `CREATE2` won’t be indexed automatically.
+
+To resolve this, simply visit the contract address after deployment. Blockscout will fetch the contract from the RPC, recognize it, and allow verification to proceed. If needed, we can enable internal transaction indexing, but this would involve discussing pricing implications due to increased costs associated with higher growth.
+
+
