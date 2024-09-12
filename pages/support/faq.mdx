@@ -22,14 +22,6 @@ Deleting your testnet or mainnet rollup automatically cancels the subscription a
 
 ---
 
-#### Why is contract verification failing when I deploy using `CREATE2`, and how can I resolve it?
-
-Deploying a contract with `CREATE2` generates a deterministic address through an internal transaction, ensuring the same address is created regardless of the deployment's origin. Internal indexing is highly resource-intensive. As a result, we've disabled internal transaction indexing in Blockscout, meaning contracts deployed via `CREATE2` won’t be automatically indexed.
-
-To resolve this, simply visit the contract address after deployment. Blockscout will fetch the contract from the RPC, recognize it, and allow verification to proceed. If needed, we can enable internal transaction indexing, but this would involve discussing pricing implications due to increased costs associated with higher growth.
-
----
-
 #### Why do I see a "This is a potential scam" warning when adding my network to MetaMask?
 
 MetaMask shows this warning when a network's ChainID isn't recognized or verified. MetaMask pulls ChainIDs from a community-maintained repository on GitHub: [Ethereum-Lists](https://github.com/ethereum-lists/chains). To resolve this, you can submit a PR to add your network's ChainID to the list.
