@@ -11,3 +11,11 @@ https://explorer-[your_network_id].t.conduit.xyz/api\?
 ```bash copy
 forge verify-contract [address] [contract] --verifier=blockscout --verifier-url=https://explorer-[your_network_id].t.conduit.xyz/api\?
 ```
+
+## FAQ
+
+### Why is contract verification failing when I deploy using `CREATE2`, and how can I resolve it?
+
+Deploying a contract with `CREATE2` generates a deterministic address through an internal transaction, ensuring the same address is created regardless of the deployment's origin. Internal indexing is highly resource-intensive. As a result, we've disabled internal transaction indexing in Blockscout, meaning contracts deployed via `CREATE2` won’t be automatically indexed.
+
+To resolve this, simply visit the contract address after deployment. Blockscout will fetch the contract from the RPC, recognize it, and allow verification to proceed. If needed, we can enable internal transaction indexing, but this would involve discussing pricing implications due to increased costs associated with higher growth.
