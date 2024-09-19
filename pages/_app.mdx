@@ -1,10 +1,11 @@
 import { Analytics } from "@vercel/analytics/react";
+import PlausibleProvider from "next-plausible";
 
 export default function ConduitDocsApp({ Component, pageProps }) {
   return (
-    <>
+    <PlausibleProvider domain="conduit.xyz" trackOutboundLinks taggedEvents>
       <Component {...pageProps} />
       <Analytics />
-    </>
+    </PlausibleProvider>
   );
 }
