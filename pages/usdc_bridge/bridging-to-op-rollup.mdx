@@ -1,0 +1,115 @@
+import { Callout } from "nextra/components";
+import { Steps } from "nextra/components";
+
+# Bridge USDC to your OP Stack Rollup
+
+This guide will show you how to manually bridge USDC to your rollup using [Foundry](https://book.getfoundry.sh/getting-started/installation) CLI commands.
+
+## Depositing
+
+On the settlement layer, execute the following steps to bridge USDC to your rollup:
+
+<Steps>
+
+### Settlement Layer USDC Addresses
+
+Pick your settlement layer and export the Token and Bridge Addresses as enviroment variables:
+
+> TODO: VERIFY SETTLEMENT_USDC_BRIDGE_ADDRESS AND ADD ADDRESSES FOR BASE
+
+> TODO: DO WE HAVE RECOMMENDATIONS FOR CERTAIN RPC URLs?
+
+| Settlement Layer | SETTLEMENT_USDC_TOKEN_ADDRESS                | SETTLEMENT_USDC_BRIDGE_ADDRESS               | SETTLEMENT_RPC_URL                  |
+| ---------------- | -------------------------------------------- | -------------------------------------------- | ----------------------------------- |
+| Ethereum Mainnet | `0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48` | `0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1` | https://ethereum-rpc.publicnode.com |
+| Sepolia Testnet  | `0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238` | `0xFBb0621E0B23b5478B630BD55a5f21f67730B0F1` | https://rpc.sepolia.org             |
+| Base             | `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913` |                                              | https://mainnet.base.org            |
+| Base Sepolia     | `0x036CbD53842c5426634e7929541eC2318f3dCF7e` |                                              | https://sepolia.base.org            |
+
+```bash copy
+export SETTLEMENT_USDC_TOKEN_ADDRESS=0x....
+```
+
+```bash copy
+export SETTLEMENT_USDC_BRIDGE_ADDRESS=0x....
+```
+
+```bash copy
+export SETTLEMENT_RPC_URL=https://...
+```
+
+### Configure Foundry with your wallet
+
+We need to sign the transactions with a private key. Refer to [Foundry's Key Management Best Practices](https://book.getfoundry.sh/tutorials/best-practices?highlight=ledger#private-key-management) for production use.
+
+The following steps will utilizes the `--private-key` flag and the `$PRIVATE_KEY` enviroment variable. Set the enviroment variable with the following command:
+
+```bash copy
+export PRIVATE_KEY=...
+```
+
+If you're using a different method, replace `--private-key $PRIVATE_KEY` with the according flag in the commands below.
+
+### Fund your wallet
+
+Make sure your wallet is funded with the native token and USDC on the settlement layer. If your bridging onto a Testnet you can claim some testnet USDC here: [Circle Testnet Faucet](https://faucet.circle.com/).
+
+### Approve
+
+Set the amount you want to bridge
+
+```bash copy
+export AMOUNT=100
+```
+
+Approve the Optimism bridge contract on the settlement layer to transfer your USDC:
+
+```bash copy
+cast send $SETTLEMENT_USDC_TOKEN_ADDRESS "approve(address,uint256)" $SETTLEMENT_USDC_BRIDGE_ADDRESS $AMOUNT --rpc-url $SETTLEMENT_RPC_URL --private-key $PRIVATE_KEY
+```
+
+### Bridge
+
+Bridge USDC to your rollup:
+
+```bash copy
+cast send $SETTLEMENT_USDC_BRIDGE_ADDRESS "sendMessage(address,uint256,uint32)" $(cast wallet address $PRIVATE_KEY) $AMOUNT 100000 --rpc-url $SETTLEMENT_RPC_URL --private-key $PRIVATE_KEY
+```
+
+</Steps>
+
+## Withdrawing
+
+After a few minutes, your deposit should be processed and available on your rollup. To withdraw USDC, follow these steps:
+
+<Steps>
+
+### Set Rollup USDC Addresses
+
+> TODO: WHERE DO USERS GET THE ADDRESSES FROM? INTEGRATIONS DASHBOARD?
+
+```bash copy
+export ROLLUP_USDC_BRIDGE_ADDRESS=0x....
+```
+
+```bash copy
+export ROLLUP_USDC_TOKEN_ADDRESS=0x....
+```
+
+### Approve
+
+Approve the rollup bridge contract to transfer your USDC:
+
+```bash copy
+cast send $ROLLUP_USDC_TOKEN_ADDRESS "approve(address,uint256)" $ROLLUP_USDC_BRIDGE_ADDRESS $AMOUNT --rpc-url $ROLLUP_RPC_URL --private-key $PRIVATE_KEY
+```
+
+### Bridge
+
+Send USDC from your rollup back to the Settlement Layer:
+
+```bash copy
+cast send $ROLLUP_USDC_BRIDGE_ADDRESS "sendMessage(address,uint256,uint32)" $(cast wallet address $PRIVATE_KEY) $AMOUNT 100000 --rpc-url $ROLLUP_RPC_URL --private-key $PRIVATE_KEY
+```
+
+</Steps>
