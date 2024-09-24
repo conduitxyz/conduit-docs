@@ -2,3 +2,25 @@ import { Callout } from "nextra/components";
 import { Steps } from "nextra/components";
 
 # Bridge USDC to your Arbitrum Rollup
+
+## Steps
+<Steps>
+
+### Locate Bridge Contracts
+In the Conduit UI, navigate to the `Apps` section. Click on `Your Apps` and select `Bridged USDC`. You’ll find the `Installation Details` in the bottom-right corner, including contract addresses for:
+
+- `Proxy Admin (Parent)`
+- `Proxy Admin (Child)`
+- `Child USDC`
+- `Master Minter`
+- `Parent USDC Gateway`
+- `Child USDC Gateway`
+
+### Use the Recommended Bridging Method
+To bridge your USDC, follow the official [Arbitrum Token Bridge documentation](https://docs.arbitrum.io/build-decentralized-apps/token-bridging/bridge-tokens-programmatically/how-to-bridge-tokens-standard).
+
+</Steps>
+
+
+## Learn More
+To gain a deeper understanding of how the USDC bridge operates, you can find the official Repository provided by Offchain Labs here: [USDC Bridge Deployment Scripts](https://github.com/OffchainLabs/token-bridge-contracts/tree/main/scripts/usdc-bridge-deployment).
