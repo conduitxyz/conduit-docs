@@ -10,13 +10,6 @@ The USDC Bridge integration adheres to Circle's [Bridged USDC Standard](https://
 
 In this section, you will also learn how to avoid liquidity fragmentation and ensure a streamlined transition to native USDC while bridging onto your rollup.
 
-## Avoiding USDC Liquidity Fragmentation
-
-When installing the USDC bridge from the Conduit Marketplace on your Rollup, it's important to ensure that the USDC liquidity is not fragmented across multiple bridges. Liquidity Fragmentation can occur when the same asset is bridged with different bridge contracts, leading to different versions of the token on your rollup.
-
-1. If you're using SuperBridge or another bridge provider, reach out to their support to add your new USDC bridge address to their UI.
-2. After deploying your new USDC bridge, make sure to update all relevant contracts and user interfaces to prevent users from interacting with an old bridge.
-
 ## Upgrade to Native USDC
 
 If the official USDC bridge from the Conduit Marketplace is used, you and Circle have the option to agree to upgrade to a native version of USDC at a later date. Having native USDC available on your rollup has the following benefits:
@@ -28,15 +21,18 @@ If the official USDC bridge from the Conduit Marketplace is used, you and Circle
 
 Therefore, we recommend using the official USDC bridge integration instead of third-party offerings.
 
+## For OP-Stacks: Avoiding Liquidity Fragmentation
+
+When installing the `Bridged USDC` Integration from the Conduit Marketplace on your Rollup, it's important to ensure that the USDC liquidity is not fragmented across multiple bridges. Liquidity Fragmentation can occur when the same asset is bridged with different bridge contracts, leading to different versions of the token on your rollup.
+
+1. If you're using SuperBridge or another bridge provider, reach out to their support to add your new USDC bridge address to their UI.
+2. After deploying your new USDC bridge, make sure to update all relevant contracts and user interfaces to prevent users from interacting with an old bridge.
+
 ## Bridged USDC Details
-
-> TODO: WHERE DO USERS GET THE ADDRESSES FROM? INTEGRATIONS DASHBOARD?
-
-> TODO: Will this adress address be the same for all rollup?
 
 The bridged USDC Token will have the following properties:
 
-- Name: `Bridged USDC (YOUR_ROLLUP_NAME)`
-- Symbol: `USDC.e`
-- Decimals: `6`
-- Bridged USDC Address: TBD
+- **Name:** `Bridged USDC (YOUR_ROLLUP_NAME)`
+- **Symbol:** `USDC.e`
+- **Decimals:** `6`
+- **Bridged USDC Token Address:** `TBD`
