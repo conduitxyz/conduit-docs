@@ -10,29 +10,46 @@ This guide will show you how to manually bridge USDC to your rollup using [Found
 On the settlement layer, execute the following steps to bridge USDC to your rollup:
 
 <Steps>
+### Locate Bridge Contracts
+
+In the Conduit UI, navigate to the `Apps` section. Click on `Your Apps` and select `Bridged USDC`. You’ll find the `Installation Details` in the bottom-right corner, including contract addresses for:
+
+- Bridged USDC
+- Bridge (Rollup)
+- Bridge (Settlement Layer)
+
+Export these addresses as environment variables:
+
+```bash copy
+export ROLLUP_USDC_TOKEN_ADDRESS=<Bridged USDC>
+```
+
+```bash copy
+export ROLLUP_USDC_BRIDGE_ADDRESS=<Bridge (Rollup)>
+```
+
+```bash copy
+export SETTLEMENT_USDC_BRIDGE_ADDRESS=<Bridge (Settlement Layer)>
+```
 
 ### Settlement Layer USDC Addresses
 
-Pick your settlement layer and export the Token and Bridge Addresses as enviroment variables:
+Pick your settlement layer and export the Settlement USDC Token Address as enviroment variables:
 
-> TODO: VERIFY SETTLEMENT_USDC_BRIDGE_ADDRESS AND ADD ADDRESSES FOR BASE
-
-> TODO: DO WE HAVE RECOMMENDATIONS FOR CERTAIN RPC URLs?
-
-| Settlement Layer | SETTLEMENT USDC TOKEN ADDRESS                | SETTLEMENT_USDC_BRIDGE_ADDRESS               | SETTLEMENT_RPC_URL                  |
-| ---------------- | -------------------------------------------- | -------------------------------------------- | ----------------------------------- |
-| Ethereum Mainnet | `0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48` | `0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1` | https://ethereum-rpc.publicnode.com |
-| Sepolia Testnet  | `0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238` | `0xFBb0621E0B23b5478B630BD55a5f21f67730B0F1` | https://rpc.sepolia.org             |
-| Base             | `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913` |                                              | https://mainnet.base.org            |
-| Base Sepolia     | `0x036CbD53842c5426634e7929541eC2318f3dCF7e` |                                              | https://sepolia.base.org            |
+| Settlement Layer | SETTLEMENT_USDC_TOKEN_ADDRESS                |
+| ---------------- | -------------------------------------------- |
+| Ethereum Mainnet | `0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48` |
+| Sepolia Testnet  | `0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238` |
+| Arbitrum         | `0xaf88d065e77c8cC2239327C5EDb3A432268e5831` |
+| Arbitrum Sepolia | `0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d` |
+| Base             | `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913` |
+| Base Sepolia     | `0x036CbD53842c5426634e7929541eC2318f3dCF7e` |
 
 ```bash copy
 export SETTLEMENT_USDC_TOKEN_ADDRESS=0x....
 ```
 
-```bash copy
-export SETTLEMENT_USDC_BRIDGE_ADDRESS=0x....
-```
+### Export Settlement RPC URL
 
 ```bash copy
 export SETTLEMENT_RPC_URL=https://...
@@ -83,19 +100,6 @@ cast send $SETTLEMENT_USDC_BRIDGE_ADDRESS "sendMessage(address,uint256,uint32)" 
 After a few minutes, your deposit should be processed and available on your rollup. To withdraw USDC, follow these steps:
 
 <Steps>
-
-### Set Rollup USDC Addresses
-
-> TODO: WHERE DO USERS GET THE ADDRESSES FROM? INTEGRATIONS DASHBOARD?
-
-```bash copy
-export ROLLUP_USDC_BRIDGE_ADDRESS=0x....
-```
-
-```bash copy
-export ROLLUP_USDC_TOKEN_ADDRESS=0x....
-```
-
 ### Approve
 
 Approve the rollup bridge contract to transfer your USDC:
@@ -116,4 +120,7 @@ cast send $ROLLUP_USDC_BRIDGE_ADDRESS "sendMessage(address,uint256,uint32)" $(ca
 
 ## Learn More
 
-For a detailed overview of how the USDC bridge functions on Optimism, you can explore the official repository here: [Bridged USDC Standard for the OP Stack](https://github.com/defi-wonderland/opUSDC).
+For a detailed overview of how the USDC bridge functions on Optimism, you can find the official Documentation and the repository here:
+
+- [Optimism Docs - Bridged USDC Standard on the OP Stack](https://docs.optimism.io/builders/chain-operators/features/bridged-usdc-standard)
+- [Repository - Bridged USDC Standard for the OP Stack](https://github.com/defi-wonderland/opUSDC)
