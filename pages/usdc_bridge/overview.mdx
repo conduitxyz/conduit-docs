@@ -23,10 +23,11 @@ Therefore, we recommend using the official USDC bridge integration instead of th
 
 ## Note for OP-Stacks
 
-When installing the `Bridged USDC` Integration from the Conduit Marketplace on your Rollup, it's important to ensure that the USDC liquidity is not fragmented across multiple bridges. Liquidity Fragmentation can occur when the same asset is bridged with different bridge contracts, leading to different versions of the token on your rollup.
+When installing the Bridged USDC Integration from the Conduit Marketplace on your Rollup, it's important to avoid having USDC liquidity split across different bridges. This can happen if the same asset is bridged with multiple bridge contracts, creating different versions of the token on your rollup.
 
-1. If you're using SuperBridge or another bridge provider, reach out to their support to add your new USDC bridge address to their UI.
-2. After deploying your new USDC bridge, make sure to update all relevant contracts and user interfaces to prevent users from interacting with an old bridge.
+1. If you're using SuperBridge or another bridge provider, it's a good idea to contact their support to have your new USDC bridge address added to their UI.
+
+2. After deploying your new USDC bridge, update any related contracts and user interfaces to ensure users are interacting with the correct bridge.
 
 ## Bridged USDC Details
 
