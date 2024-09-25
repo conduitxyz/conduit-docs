@@ -34,7 +34,7 @@ export SETTLEMENT_USDC_BRIDGE_ADDRESS=<Bridge (Settlement Layer)>
 
 ### Settlement Layer USDC Addresses & Settlement RPC URL
 
-Pick your settlement layer and export the Settlement USDC Token Address as enviroment variables:
+Pick your settlement layer and export the Settlement USDC Token Address and the RPC URL as environment variables:
 
 | Settlement Layer | SETTLEMENT_USDC_TOKEN_ADDRESS                |
 | ---------------- | -------------------------------------------- |
@@ -57,17 +57,17 @@ export SETTLEMENT_RPC_URL=https://...
 
 We need to sign the transactions with a private key. Refer to [Foundry's Key Management Best Practices](https://book.getfoundry.sh/tutorials/best-practices?highlight=ledger#private-key-management) for production use.
 
-The following steps will utilizes the `--private-key` flag and the `$PRIVATE_KEY` enviroment variable. Set the enviroment variable with the following command:
+The following steps will utilize the `--private-key` flag and the `$PRIVATE_KEY` environment variable. Set the environment variable with the following command:
 
 ```bash copy
 export PRIVATE_KEY=...
 ```
 
-If you're using a different method, replace `--private-key $PRIVATE_KEY` with the according flag in the commands below.
+If you're using a different method, replace `--private-key $PRIVATE_KEY` with the appropriate flag in the commands below.
 
 ### Fund your wallet
 
-Make sure your wallet is funded with the native token and USDC on the settlement layer. If your bridging onto a Testnet you can claim some testnet USDC here: [Circle Testnet Faucet](https://faucet.circle.com/).
+Make sure your wallet is funded with the native token and USDC on the settlement layer. If you are bridging onto a Testnet you can claim some testnet USDC here: [Circle Testnet Faucet](https://faucet.circle.com/).
 
 ### Approve
 
@@ -118,7 +118,7 @@ cast send $ROLLUP_USDC_BRIDGE_ADDRESS "sendMessage(address,uint256,uint32)" $(ca
 
 ## Learn More
 
-For a detailed overview of how the USDC bridge functions on Optimism, you can find the official Documentation and the repository here:
+For a detailed overview of how the USDC bridge functions on Optimism, you can find the official documentation and the repository here:
 
 - [Optimism Docs - Bridged USDC Standard on the OP Stack](https://docs.optimism.io/builders/chain-operators/features/bridged-usdc-standard)
 - [Repository - Bridged USDC Standard for the OP Stack](https://github.com/defi-wonderland/opUSDC)
