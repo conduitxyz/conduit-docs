@@ -50,7 +50,7 @@ const config: DocsThemeConfig = {
   head: () => {
     const { title } = useConfig();
 
-    const imageUrl = new URL("https://docs.conduit.xyz/og-image.png");
+    const imageUrl = new URL("https://docs.conduit.xyz/og-image-new.png");
 
     const description =
       "Deploy fully-managed, production-grade rollups on Ethereum in just a few clicks, no code required.";
